@@ -25,6 +25,7 @@
     "@enso-ui/forms": "^2.0",
     "@enso-ui/filters": "^2.0",
     "@enso-ui/switch": "^1.0",
+    "@enso-ui/select": "^2.1",
     "@enso-ui/tables": "^2.0",
     "@enso-ui/ui": "^3.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.2",
