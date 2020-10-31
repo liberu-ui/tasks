@@ -12,8 +12,6 @@ import BaseForm from './BaseForm.vue';
 export default {
     name: 'Edit',
 
-    inject: ['i18n'],
-
     components: { BaseForm },
 };
 </script>

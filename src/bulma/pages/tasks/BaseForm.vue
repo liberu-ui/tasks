@@ -23,8 +23,6 @@ import Flags from './components/Flags.vue';
 export default {
     name: 'BaseForm',
 
-    inject: ['i18n'],
-
     components: { EnsoForm, Flags },
 };
 </script>

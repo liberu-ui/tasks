@@ -1,6 +1,6 @@
 <template>
     <div class="flags">
-        <div class=" vue-filter is-paddingless">
+        <div class="vue-filter">
             <div class="tabs-wrapper">
                 <div class="tabs is-toggle is-fullwidth filter-tabs">
                     <ul>
@@ -14,7 +14,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li :class="{ 'is-active': ! value }">
+                        <li :class="{ 'is-active': !value }">
                             <a @click="$emit('input', null)">
                                 <span class="icon has-text-black">
                                     <fa icon="times"/>
@@ -30,16 +30,13 @@
 
 <script>
 import { mapState } from 'vuex';
-import { VTooltip } from 'v-tooltip';
-import { faClock, faFlag } from '@fortawesome/free-solid-svg-icons';
+import { faFlag, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
-library.add(faClock, faFlag);
+library.add(faFlag, faTimes);
 
 export default {
     name: 'Flags',
-
-    directives: { tooltip: VTooltip },
 
     props: {
         value: {
@@ -56,22 +53,6 @@ export default {
 .flags {
     .tabs-wrapper {
         padding: 0;
-
-        .tabs {
-            height: 2.25em;
-
-            li {
-                a {
-                    padding: 0.25em;
-                }
-
-                &.is-active {
-                    a {
-                        background-color: rgba(#ffdd57, 0.25) !important;
-                    }
-                }
-            }
-        }
     }
 }
 </style>
