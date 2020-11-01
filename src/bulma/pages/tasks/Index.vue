@@ -173,7 +173,7 @@ export default {
         }
 
         .dropdown-menu .dropdown-content .dropdown-item .icon.selected {
-            right: 0.6rem;               
+            right: 0.6rem;
         }
     }
 }

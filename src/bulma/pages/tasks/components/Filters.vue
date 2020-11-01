@@ -58,10 +58,12 @@ export default {
     computed: {
         ...mapState(['enums']),
         flagOptions() {
+            // eslint-disable-next-line no-underscore-dangle
             return this.enums.flags._keys().map(flag => ({
                 icon: 'flag',
                 value: Number.parseInt(flag),
-                class: `has-text-${this.enums.flags._get(flag).toLowerCase()}`
+                // eslint-disable-next-line no-underscore-dangle
+                class: `has-text-${this.enums.flags._get(flag).toLowerCase()}`,
             }));
         },
     },

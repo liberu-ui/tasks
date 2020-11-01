@@ -24,5 +24,7 @@ export default {
     name: 'BaseForm',
 
     components: { EnsoForm, Flags },
+
+    inject: ['i18n'],
 };
 </script>
