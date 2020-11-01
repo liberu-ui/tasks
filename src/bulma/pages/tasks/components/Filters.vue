@@ -1,5 +1,12 @@
 <template>
     <div class="columns is-centered is-multiline">
+        <div class="column is-narrow">
+            <enso-select-filter class="box raises-on-hover allocation-filter"
+                v-model="filters.tasks.allocated_to"
+                source="administration.users.options"
+                label="person.name"
+                :name="i18n('Allocated To')"/>
+        </div>
         <div class="column is-narrow flags-filter">
             <enso-filter class="box raises-on-hover"
                 v-model="filters.tasks.flag"
@@ -20,12 +27,19 @@
                 :options="overdueOptions"
                 :name="i18n('Overdue')"/>
         </div>
+        <div class="column is-narrow">
+            <enso-date-filter class="box raises-on-hover"
+                v-model="params.dateInterval"
+                @update="intervals.tasks.reminder = $event"/>
+        </div>
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import { EnsoFilter, BooleanFilter } from '@enso-ui/filters/bulma';
+import {
+    BooleanFilter, EnsoDateFilter, EnsoFilter, EnsoSelectFilter,
+} from '@enso-ui/filters/bulma';
 import { faFlag, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 
@@ -34,12 +48,18 @@ library.add(faFlag, faExclamation);
 export default {
     name: 'Filters',
 
-    components: { BooleanFilter, EnsoFilter },
+    components: {
+        BooleanFilter, EnsoDateFilter, EnsoFilter, EnsoSelectFilter,
+    },
 
     inject: ['i18n'],
 
     props: {
         filters: {
+            type: Object,
+            required: true,
+        },
+        intervals: {
             type: Object,
             required: true,
         },
@@ -61,7 +81,7 @@ export default {
             // eslint-disable-next-line no-underscore-dangle
             return this.enums.flags._keys().map(flag => ({
                 icon: 'flag',
-                value: Number.parseInt(flag),
+                value: flag * 1,
                 // eslint-disable-next-line no-underscore-dangle
                 class: `has-text-${this.enums.flags._get(flag).toLowerCase()}`,
             }));
@@ -69,3 +89,9 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+.allocation-filter {
+    width: 250px;
+}
+</style>

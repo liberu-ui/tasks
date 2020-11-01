@@ -1,10 +1,12 @@
 <template>
     <div class="wrapper">
         <filters :filters="filters"
+            :intervals="intervals"
             :params="params"
             v-if="ready"/>
         <enso-table class="box is-paddingless raises-on-hover"
             :filters="filters"
+            :intervals="intervals"
             :params="params"
             @ready="ready = true"
             @reset="$refs.filterState.reset()"
@@ -40,27 +42,40 @@
                 </v-popover>
             </template>
             <template v-slot:reminder="{ row }">
-                <span class="icon is-clickable"
-                    :class="row.overdue ? 'has-text-danger' : 'has-text-success'"
-                    v-tooltip="row.reminder"
-                    v-if="row.reminder">
-                    <fa icon="clock"/>
-                </span>
-                <span class="icon is-naked is-clickable is-small"
-                    v-else>
-                    <fa icon="cog"
-                        size="xs"/>
-                </span>
+                <v-popover trigger="click"
+                    :ref="`reminder-${row.id}`">
+                    <span class="icon is-clickable"
+                        :class="row.overdue ? 'has-text-danger' : 'has-text-success'"
+                        v-tooltip="row.reminder"
+                        v-if="row.reminder">
+                        <fa icon="clock"/>
+                    </span>
+                    <span class="icon is-naked is-clickable is-small"
+                        v-else>
+                        <fa icon="cog"
+                            size="xs"/>
+                    </span>
+                    <template v-slot:popover>
+                        <enso-datepicker class="reminder-picker"
+                            v-model="row.rawReminder"
+                            :alt-format="dateFormat"
+                            @value-updated="
+                                row.reminder = $event;
+                                update(row);
+                                $refs[`reminder-${row.id}`].hide()
+                            "/>
+                    </template>
+                </v-popover>
             </template>
             <template v-slot:allocatedTo="{ row }">
                 <v-popover trigger="click"
                     :ref="`allocatedTo-${row.id}`"
                     v-if="canChangeAllocation">
                     <avatar class="is-24x24 is-clickable"
-                        :user="row.allocated_to"/>
+                        :user="row.allocatedTo"/>
                     <template v-slot:popover>
                         <div class="allocated-to">
-                            <enso-select v-model="row.allocated_to.id"
+                            <enso-select v-model="row.allocatedTo.id"
                                 @select="$refs[`allocatedTo-${row.id}`].hide(); update(row)"
                                 source="administration.users.options"
                                 disable-clear
@@ -69,7 +84,7 @@
                     </template>
                 </v-popover>
                 <avatar class="is-24x24"
-                    :user="row.allocated_to"
+                    :user="row.allocatedTo"
                     v-else/>
             </template>
             <template v-slot:completed="{ row }">
@@ -92,15 +107,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { FilterState } from '@enso-ui/filters/renderless';
 import { EnsoTable } from '@enso-ui/bulma';
 import { EnsoSelect } from '@enso-ui/select/bulma';
 import VueSwitch from '@enso-ui/switch/bulma';
+import { EnsoDatepicker } from '@enso-ui/datepicker/bulma';
 import Avatar from '@enso-ui/ui/src/bulma/pages/administration/users/components/Avatar.vue';
 import { faClock, faInfoCircle, faCog } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { VTooltip, VPopover } from 'v-tooltip';
-import { mapState } from 'vuex';
 import Filters from './components/Filters.vue';
 import Flags from './components/Flags.vue';
 
@@ -109,12 +125,13 @@ library.add(faClock, faInfoCircle, faCog);
 export default {
     name: 'Index',
 
-    inject: ['route', 'toastr', 'errorHandler'],
+    inject: ['i18n', 'route', 'toastr', 'errorHandler'],
 
     directives: { tooltip: VTooltip },
 
     components: {
         Avatar,
+        EnsoDatepicker,
         EnsoTable,
         FilterState,
         VueSwitch,
@@ -131,33 +148,52 @@ export default {
             tasks: {
                 completed: false,
                 flag: null,
+                allocated_to: null,
+            },
+        },
+        intervals: {
+            tasks: {
+                reminder: {
+                    min: null,
+                    max: null,
+                },
             },
         },
         params: {
+            dateInterval: 'today',
             overdue: null,
         },
     }),
 
     computed: {
-        ...mapState(['enums', 'user']),
+        ...mapState(['enums', 'user', 'meta']),
         canChangeAllocation() {
             return [
                 this.enums.roles.Admin, this.enums.roles.Supervisor,
             ].includes(`${this.user.role.id}`);
+        },
+        dateFormat() {
+            return this.meta.dateTimeFormat.split(':s').shift();
         },
     },
 
     methods: {
         update({
             // eslint-disable-next-line camelcase
-            id, completed, description, flag, name, allocated_to,
+            id, name, flag, reminder, allocatedTo, completed,
         }) {
             axios.patch(this.route('tasks.update', { task: id }), {
-                completed, description, flag, name, allocated_to: allocated_to?.id,
+                name, flag, reminder, allocated_to: allocatedTo?.id, completed,
             }).then(({ data: { message } }) => {
                 this.toastr.success(message);
                 this.$refs.table.fetch();
-            }).catch(this.errorHandler);
+            }).catch(error => {
+                if (error.response && error.response.status === 422) {
+                    this.toastr.warning(this.i18n(error.response.data.message));
+                } else {
+                    this.errorHandler(error);
+                }
+            });
         },
     },
 };
@@ -175,6 +211,11 @@ export default {
         .dropdown-menu .dropdown-content .dropdown-item .icon.selected {
             right: 0.6rem;
         }
+    }
+}
+.reminder-picker {
+    .input {
+        width: 220px;
     }
 }
 </style>
