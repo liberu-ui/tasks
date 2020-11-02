@@ -37,7 +37,10 @@
                     </span>
                     <template v-slot:popover>
                         <flags v-model="row.flag"
-                            @input="update(row); $refs[`flag-${row.id}`].hide()"/>
+                            @input="
+                                update(row.id, 'flag', row.flag);
+                                $refs[`flag-${row.id}`].hide()
+                            "/>
                     </template>
                 </v-popover>
             </template>
@@ -60,8 +63,7 @@
                             v-model="row.rawReminder"
                             :alt-format="dateFormat"
                             @value-updated="
-                                row.reminder = $event;
-                                update(row);
+                                update(row.id, 'reminder', $event);
                                 $refs[`reminder-${row.id}`].hide()
                             "/>
                     </template>
@@ -69,14 +71,17 @@
             </template>
             <template v-slot:allocatedTo="{ row }">
                 <v-popover trigger="click"
-                    :ref="`allocatedTo-${row.id}`"
+                    :ref="`allocated_to-${row.id}`"
                     v-if="canChangeAllocation">
                     <avatar class="is-24x24 is-clickable"
                         :user="row.allocatedTo"/>
                     <template v-slot:popover>
                         <div class="allocated-to">
                             <enso-select v-model="row.allocatedTo.id"
-                                @select="$refs[`allocatedTo-${row.id}`].hide(); update(row)"
+                                @select="
+                                    update(row.id, 'allocated_to', row.allocatedTo.id);
+                                    $refs[`allocated_to-${row.id}`].hide();
+                                "
                                 source="administration.users.options"
                                 disable-clear
                                 label="person.name"/>
@@ -90,7 +95,7 @@
             <template v-slot:completed="{ row }">
                 <vue-switch class="is-medium"
                     v-model="row.completed"
-                    @input="update(row)"/>
+                    @input="update(row.id, 'completed', row.completed)"/>
             </template>
             <template v-slot:createdBy="{ row: { createdBy } }">
                 <avatar class="is-24x24"
@@ -178,12 +183,9 @@ export default {
     },
 
     methods: {
-        update({
-            // eslint-disable-next-line camelcase
-            id, name, flag, reminder, allocatedTo, completed,
-        }) {
+        update(id, attribute, value) {
             axios.patch(this.route('tasks.update', { task: id }), {
-                name, flag, reminder, allocated_to: allocatedTo?.id, completed,
+                [attribute]: value,
             }).then(({ data: { message } }) => {
                 this.toastr.success(message);
                 this.$refs.table.fetch();
@@ -195,6 +197,7 @@ export default {
                 }
             });
         },
+
     },
 };
 </script>
