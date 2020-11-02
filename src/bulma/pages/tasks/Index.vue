@@ -40,12 +40,14 @@
                             @input="
                                 update(row.id, 'flag', row.flag);
                                 $refs[`flag-${row.id}`].hide()
-                            "/>
+                            "
+                            v-if="isOpen(`flag-${row.id}`)"/>
                     </template>
                 </v-popover>
             </template>
             <template v-slot:reminder="{ row }">
                 <v-popover trigger="click"
+                    :auto-hide="false"
                     :ref="`reminder-${row.id}`">
                     <span class="icon is-clickable"
                         :class="row.overdue ? 'has-text-danger' : 'has-text-success'"
@@ -60,12 +62,15 @@
                     </span>
                     <template v-slot:popover>
                         <enso-datepicker class="reminder-picker"
+                            v-click-outside="() => {
+                                update(row.id, 'reminder', row.rawReminder);
+                                $refs[`reminder-${row.id}`].hide();
+                            }"
                             v-model="row.rawReminder"
+                            format="Y-m-d H:i:s"
+                            time
                             :alt-format="dateFormat"
-                            @value-updated="
-                                update(row.id, 'reminder', $event);
-                                $refs[`reminder-${row.id}`].hide()
-                            "/>
+                            v-if="isOpen(`reminder-${row.id}`)"/>
                     </template>
                 </v-popover>
             </template>
@@ -76,7 +81,8 @@
                     <avatar class="is-24x24 is-clickable"
                         :user="row.allocatedTo"/>
                     <template v-slot:popover>
-                        <div class="allocated-to">
+                        <div class="allocated-to"
+                            v-if="isOpen(`allocated_to-${row.id}`)">
                             <enso-select v-model="row.allocatedTo.id"
                                 @select="
                                     update(row.id, 'allocated_to', row.allocatedTo.id);
@@ -122,6 +128,7 @@ import Avatar from '@enso-ui/ui/src/bulma/pages/administration/users/components/
 import { faClock, faInfoCircle, faCog } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { VTooltip, VPopover } from 'v-tooltip';
+import { clickOutside } from '@enso-ui/directives';
 import Filters from './components/Filters.vue';
 import Flags from './components/Flags.vue';
 
@@ -132,7 +139,7 @@ export default {
 
     inject: ['i18n', 'route', 'toastr', 'errorHandler'],
 
-    directives: { tooltip: VTooltip },
+    directives: { tooltip: VTooltip, clickOutside },
 
     components: {
         Avatar,
@@ -198,6 +205,9 @@ export default {
             });
         },
 
+        isOpen(ref) {
+            return this.$refs[ref]?.isOpen;
+        },
     },
 };
 </script>
