@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/enso-ui/tasks#readme",
   "dependencies": {
-    "@enso-ui/bulma": "^3.0.4",
+    "@enso-ui/bulma": "^4.0",
     "@enso-ui/datepicker": "^1.1.12",
     "@enso-ui/filters": "^2.0",
     "@enso-ui/forms": "^2.0",
