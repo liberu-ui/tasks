@@ -124,7 +124,7 @@ import { EnsoTable } from '@enso-ui/bulma';
 import { EnsoSelect } from '@enso-ui/select/bulma';
 import VueSwitch from '@enso-ui/switch/bulma';
 import { EnsoDatepicker } from '@enso-ui/datepicker/bulma';
-import Avatar from '@enso-ui/ui/src/bulma/pages/administration/users/components/Avatar.vue';
+import Avatar from '@enso-ui/users/src/bulma/pages/users/components/Avatar.vue';
 import { faClock, faInfoCircle, faCog } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { VTooltip, VPopover } from 'v-tooltip';
