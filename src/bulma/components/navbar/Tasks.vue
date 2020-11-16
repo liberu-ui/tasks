@@ -8,7 +8,8 @@
                 :loading="loading"
                 @click="$refs.navbarItem.toggle(); fetch()"
                 @touch="$router.push({'name': 'tasks.index'})"
-                ref="navbarItem">
+                ref="navbarItem"
+                v-if="canAccess('tasks.index')">
                 <template v-slot:sup
                     v-if="overdue > 0">
                     <span class="has-text-danger">
@@ -102,7 +103,7 @@ export default {
 
     components: { CoreTasks, NavbarItem },
 
-    inject: ['i18n'],
+    inject: ['canAccess', 'i18n'],
 };
 
 </script>
