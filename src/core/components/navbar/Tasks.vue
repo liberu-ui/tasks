@@ -1,12 +1,12 @@
 <script>
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash';
 import { mapState, mapGetters, mapActions } from 'vuex';
 import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
 
 export default {
     name: 'Tasks',
 
-    inject: ['errorHandler', 'route', 'toastr'],
+    inject: ['canAccess', 'errorHandler', 'route', 'toastr'],
 
     props: {
         paginate: {
@@ -16,12 +16,12 @@ export default {
     },
 
     data: () => ({
-        tasks: [],
+        echo: null,
+        loading: false,
+        offset: 0,
         overdue: 0,
         pending: 0,
-        offset: 0,
-        loading: false,
-        echo: null,
+        tasks: [],
     }),
 
     computed: {
@@ -39,10 +39,25 @@ export default {
 
     methods: {
         ...mapActions('websockets', ['connect']),
+        computeScrollPosition(event) {
+            const a = event.target.scrollTop;
+            const b = event.target.scrollHeight - event.target.clientHeight;
+
+            if (a / b > 0.7) {
+                this.fetch();
+            }
+        },
         count() {
             axios.get(this.route('tasks.count'))
                 .then(({ data }) => this.updateCounters(data))
                 .catch(this.errorHandler);
+        },
+        dateTime(dateTime) {
+            return format(dateTime, `${this.meta.dateFormat} H:i`);
+        },
+        flagClass(id) {
+            // eslint-disable-next-line no-underscore-dangle
+            return `has-text-${this.enums.flags._get(id).toLowerCase()}`;
         },
         fetch() {
             if (this.loading) {
@@ -71,34 +86,37 @@ export default {
             this.overdue = overdueCount;
             this.pending = pendingCount;
         },
-        computeScrollPosition(event) {
-            const a = event.target.scrollTop;
-            const b = event.target.scrollHeight - event.target.clientHeight;
+        visitTask({ id }) {
+            const name = 'tasks.edit';
 
-            if (a / b > 0.7) {
-                this.fetch();
+            if (this.$route.name !== name || this.$route.params?.task !== id) {
+                this.$router.push({ name, params: { task: id } });
             }
         },
-        flagClass(id) {
-            return `has-text-${this.enums.flags._get(id).toLowerCase()}`;
-        },
-        dateTime(dateTime) {
-            return format(dateTime, `${this.meta.dateFormat} H:i`);
+        visitTasks() {
+            const name = 'tasks.index';
+
+            if (this.$route.name !== name) {
+                this.$router.push({ name });
+            }
         },
     },
 
     render() {
         return this.$scopedSlots.default({
-            tasks: this.tasks,
-            loading: this.loading,
-            pending: this.pending,
-            overdue: this.overdue,
-            fetch: this.fetch,
+            allowed: this.canAccess('tasks.index'),
             dateTime: this.dateTime,
-            flagClass: this.flagClass,
             events: {
                 scroll: e => this.computeScrollPosition(e),
             },
+            fetch: this.fetch,
+            flagClass: this.flagClass,
+            loading: this.loading,
+            overdue: this.overdue,
+            pending: this.pending,
+            tasks: this.tasks,
+            visitTask: this.visitTask,
+            visitTasks: this.visitTasks,
         });
     },
 };

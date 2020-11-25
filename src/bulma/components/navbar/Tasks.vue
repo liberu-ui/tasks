@@ -1,15 +1,15 @@
 <template>
     <core-tasks>
         <template v-slot:default="{
-                tasks, loading, pending, overdue,
-                fetch, dateTime, flagClass, events,
+                allowed, dateTime, events, fetch, flagClass, loading,
+                overdue, pending, tasks, visitTask, visitTasks,
             }">
             <navbar-item icon="tasks"
                 :loading="loading"
                 @click="$refs.navbarItem.toggle(); fetch()"
-                @touch="$router.push({'name': 'tasks.index'})"
+                @touch="visitTasks();$refs.navbarItem.hide()"
                 ref="navbarItem"
-                v-if="canAccess('tasks.index')">
+                v-if="allowed">
                 <template v-slot:sup
                     v-if="overdue > 0">
                     <span class="has-text-danger">
@@ -28,10 +28,7 @@
                         <a v-for="task in tasks"
                             :key="task.id"
                             class="navbar-item"
-                            @click="$router.push({
-                                'name': 'tasks.edit',
-                                params: { task: task.id }
-                            }); $refs.navbarItem.hide()">
+                            @click="visitTask(task);$refs.navbarItem.hide()">
                             <p class="is-task">
                                 <span>
                                     {{ task.name }}
@@ -61,9 +58,7 @@
                         class="level navbar-item">
                         <div class="level-item">
                             <a class="button is-fullwidth is-small is-info"
-                                @click="$router.push({
-                                    'name': 'tasks.index'
-                                }); $refs.navbarItem.hide();">
+                                @click="visitTasks();$refs.navbarItem.hide()">
                                 <span>{{ i18n("See all") }}</span>
                                 <span class="icon is-small">
                                     <fa icon="eye"/>
@@ -103,7 +98,7 @@ export default {
 
     components: { CoreTasks, NavbarItem },
 
-    inject: ['canAccess', 'i18n'],
+    inject: ['i18n'],
 };
 
 </script>
