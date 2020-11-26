@@ -88,7 +88,6 @@
                                     update(row.id, 'allocated_to', row.allocatedTo.id);
                                     $refs[`allocated_to-${row.id}`].hide();
                                 "
-                                :params="roles"
                                 source="tasks.allocatedTo.options"
                                 disable-clear
                                 label="person.name"/>
