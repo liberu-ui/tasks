@@ -88,7 +88,7 @@
                                     update(row.id, 'allocated_to', row.allocatedTo.id);
                                     $refs[`allocated_to-${row.id}`].hide();
                                 "
-                                source="tasks.allocatedTo.options"
+                                source="tasks.users"
                                 disable-clear
                                 label="person.name"/>
                         </div>
