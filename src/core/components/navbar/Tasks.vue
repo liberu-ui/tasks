@@ -31,6 +31,10 @@ export default {
     },
 
     created() {
+        if (!this.canAccess('tasks.count')) {
+            return;
+        }
+
         this.fetch = debounce(this.fetch, 500);
         this.count();
         this.connect();
