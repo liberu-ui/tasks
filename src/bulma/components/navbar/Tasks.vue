@@ -1,15 +1,14 @@
 <template>
     <core-tasks>
         <template v-slot:default="{
-                allowed, dateTime, events, fetch, flagClass, loading,
+                dateTime, events, fetch, flagClass, loading,
                 overdue, pending, tasks, visitTask, visitTasks,
             }">
             <navbar-item icon="tasks"
                 :loading="loading"
                 @click="$refs.navbarItem.toggle(); fetch()"
                 @touch="visitTasks();$refs.navbarItem.hide()"
-                ref="navbarItem"
-                v-if="allowed">
+                ref="navbarItem">
                 <template v-slot:sup
                     v-if="overdue > 0">
                     <span class="has-text-danger">
