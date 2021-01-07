@@ -6,7 +6,7 @@ import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
 export default {
     name: 'Tasks',
 
-    inject: ['canAccess', 'errorHandler', 'route', 'toastr'],
+    inject: ['errorHandler', 'route', 'toastr'],
 
     props: {
         paginate: {
@@ -104,7 +104,6 @@ export default {
 
     render() {
         return this.$scopedSlots.default({
-            allowed: this.canAccess('tasks.index'),
             dateTime: this.dateTime,
             events: {
                 scroll: e => this.computeScrollPosition(e),
