@@ -25,7 +25,7 @@ export default {
     }),
 
     computed: {
-        ...mapGetters('websockets', ['task']),
+        ...mapGetters('websockets', ['channels']),
         ...mapState('layout', ['isTouch']),
         ...mapState(['enums', 'meta']),
     },
@@ -75,7 +75,7 @@ export default {
             }).catch(this.errorHandler);
         },
         listen() {
-            window.Echo.private(this.task)
+            window.Echo.private(this.channels.task)
                 .listen('.updated', data => {
                     this.offset = 0;
                     this.tasks = [];
