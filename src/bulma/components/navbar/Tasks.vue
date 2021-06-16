@@ -27,7 +27,7 @@
                         <a v-for="task in tasks"
                             :key="task.id"
                             class="navbar-item"
-                            @click="visitTask(task);$refs.navbarItem.hide()">
+                            @click.once="visitTask(task);$refs.navbarItem.hide()">
                             <p class="is-task">
                                 <span>
                                     {{ task.name }}
@@ -57,7 +57,7 @@
                         class="level navbar-item">
                         <div class="level-item">
                             <a class="button is-fullwidth is-small is-info"
-                                @click="visitTasks();$refs.navbarItem.hide()">
+                                @click.once="visitTasks();$refs.navbarItem.hide()">
                                 <span>{{ i18n("See all") }}</span>
                                 <span class="icon is-small">
                                     <fa icon="eye"/>
