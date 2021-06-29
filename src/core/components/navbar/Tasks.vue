@@ -6,7 +6,7 @@ import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
 export default {
     name: 'Tasks',
 
-    inject: ['errorHandler', 'route', 'toastr'],
+    inject: ['errorHandler', 'route', 'routerErrorHandler', 'toastr'],
 
     props: {
         paginate: {
@@ -87,18 +87,12 @@ export default {
             this.pending = pendingCount;
         },
         visitTask({ id }) {
-            const name = 'tasks.edit';
-
-            if (this.$route.name !== name || this.$route.params?.task !== id) {
-                this.$router.push({ name, params: { task: id } });
-            }
+            this.$router.push({ name: 'tasks.edit', params: { task: id } })
+                .catch(this.routerErrorHandler);
         },
         visitTasks() {
-            const name = 'tasks.index';
-
-            if (this.$route.name !== name) {
-                this.$router.push({ name });
-            }
+            this.$router.push({ name: 'tasks.index' })
+                .catch(this.routerErrorHandler);
         },
     },
 
