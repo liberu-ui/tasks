@@ -154,7 +154,7 @@ export default {
     },
 
     data: () => ({
-        apiVersion: 1.0,
+        apiVersion: 1.1,
         ready: false,
         filters: {
             tasks: {
