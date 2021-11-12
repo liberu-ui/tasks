@@ -12,7 +12,7 @@
             @reset="$refs.filterState.reset()"
             id="tasks"
             ref="table">
-            <template v-slot:name="{ row }">
+            <template #:name="{ row }">
                 <span>
                     {{ row.name }}
                 </span>
@@ -22,8 +22,8 @@
                         size="xs"/>
                 </span>
             </template>
-            <template v-slot:flag="{ row, column }">
-                <v-popover trigger="click"
+            <template #:flag="{ row, column }">
+                <dropdown trigger="click"
                     :ref="`flag-${row.id}`">
                     <span class="icon is-clickable"
                         :class="`has-text-${column.enum._get(row.flag).toLowerCase()}`"
@@ -35,7 +35,7 @@
                         <fa icon="cog"
                             size="xs"/>
                     </span>
-                    <template v-slot:popover>
+                    <template #:popper>
                         <flags v-model="row.flag"
                             @input="
                                 update(row.id, 'flag', row.flag);
@@ -43,10 +43,10 @@
                             "
                             v-if="isOpen(`flag-${row.id}`)"/>
                     </template>
-                </v-popover>
+                </dropdown>
             </template>
-            <template v-slot:reminder="{ row }">
-                <v-popover trigger="click"
+            <template #:reminder="{ row }">
+                <dropdown trigger="click"
                     :auto-hide="false"
                     :ref="`reminder-${row.id}`">
                     <span class="icon is-clickable"
@@ -60,7 +60,7 @@
                         <fa icon="cog"
                             size="xs"/>
                     </span>
-                    <template v-slot:popover>
+                    <template #:popper>
                         <enso-datepicker class="reminder-picker"
                             v-click-outside="() => {
                                 update(row.id, 'reminder', row.rawReminder);
@@ -72,15 +72,15 @@
                             :alt-format="dateFormat"
                             v-if="isOpen(`reminder-${row.id}`)"/>
                     </template>
-                </v-popover>
+                </dropdown>
             </template>
-            <template v-slot:allocatedTo="{ row }">
-                <v-popover trigger="click"
+            <template #:allocatedTo="{ row }">
+                <dropdown trigger="click"
                     :ref="`allocated_to-${row.id}`"
                     v-if="canChangeAllocation">
                     <avatar class="is-24x24 is-clickable"
                         :user="row.allocatedTo"/>
-                    <template v-slot:popover>
+                    <template #:popper>
                         <div class="allocated-to"
                             v-if="isOpen(`allocated_to-${row.id}`)">
                             <enso-select v-model="row.allocatedTo.id"
@@ -93,17 +93,17 @@
                                 label="person.name"/>
                         </div>
                     </template>
-                </v-popover>
+                </dropdown>
                 <avatar class="is-24x24"
                     :user="row.allocatedTo"
                     v-else/>
             </template>
-            <template v-slot:completed="{ row }">
+            <template #:completed="{ row }">
                 <vue-switch class="is-medium"
                     v-model="row.completed"
                     @input="update(row.id, 'completed', row.completed)"/>
             </template>
-            <template v-slot:createdBy="{ row: { createdBy } }">
+            <template #:createdBy="{ row: { createdBy } }">
                 <avatar class="is-24x24"
                     :user="createdBy"/>
             </template>
@@ -120,14 +120,14 @@
 <script>
 import { mapState } from 'vuex';
 import { FilterState } from '@enso-ui/filters/renderless';
-import { EnsoTable } from '@enso-ui/bulma';
+import { EnsoTable } from '@enso-ui/tables';
 import { EnsoSelect } from '@enso-ui/select/bulma';
 import VueSwitch from '@enso-ui/switch/bulma';
 import { EnsoDatepicker } from '@enso-ui/datepicker/bulma';
 import { Avatar } from '@enso-ui/users';
 import { faClock, faInfoCircle, faCog } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { VTooltip, VPopover } from 'v-tooltip';
+import { VTooltip, Dropdown } from 'v-tooltip';
 import { clickOutside } from '@enso-ui/directives';
 import Filters from './components/Filters.vue';
 import Flags from './components/Flags.vue';
@@ -137,8 +137,6 @@ library.add(faClock, faInfoCircle, faCog);
 export default {
     name: 'Index',
 
-    inject: ['i18n', 'route', 'toastr', 'errorHandler'],
-
     directives: { tooltip: VTooltip, clickOutside },
 
     components: {
@@ -147,11 +145,13 @@ export default {
         EnsoTable,
         FilterState,
         VueSwitch,
-        VPopover,
+        Dropdown,
         Filters,
         Flags,
         EnsoSelect,
     },
+
+    inject: ['i18n', 'route', 'toastr', 'errorHandler'],
 
     data: () => ({
         apiVersion: 1.1,
