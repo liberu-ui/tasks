@@ -120,7 +120,7 @@
 <script>
 import { mapState } from 'vuex';
 import { FilterState } from '@enso-ui/filters/renderless';
-import { EnsoTable } from '@enso-ui/tables';
+import { EnsoTable } from '@enso-ui/tables/bulma';
 import { EnsoSelect } from '@enso-ui/select/bulma';
 import VueSwitch from '@enso-ui/switch/bulma';
 import { EnsoDatepicker } from '@enso-ui/datepicker/bulma';
