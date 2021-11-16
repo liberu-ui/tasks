@@ -125,8 +125,9 @@ import { EnsoSelect } from '@enso-ui/select/bulma';
 import VueSwitch from '@enso-ui/switch/bulma';
 import { EnsoDatepicker } from '@enso-ui/datepicker/bulma';
 import { Avatar } from '@enso-ui/users';
-import { faClock, faInfoCircle, faCog } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { faClock, faInfoCircle, faCog } from '@fortawesome/free-solid-svg-icons';
 import { VTooltip, Dropdown } from 'v-tooltip';
 import { clickOutside } from '@enso-ui/directives';
 import Filters from './components/Filters.vue';
@@ -146,6 +147,7 @@ export default {
         FilterState,
         VueSwitch,
         Dropdown,
+        Fa,
         Filters,
         Flags,
         EnsoSelect,

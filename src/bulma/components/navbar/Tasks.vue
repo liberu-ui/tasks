@@ -80,6 +80,7 @@
 </template>
 <script>
 import { clickOutside } from '@enso-ui/directives';
+import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faEye, faClock, faFlag, faTasks,
@@ -95,7 +96,7 @@ export default {
 
     directives: { clickOutside, tooltip: VTooltip },
 
-    components: { CoreTasks, NavbarItem },
+    components: { CoreTasks, Fa, NavbarItem },
 
     inject: ['i18n'],
 };

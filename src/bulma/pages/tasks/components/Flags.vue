@@ -30,13 +30,16 @@
 
 <script>
 import { mapState } from 'vuex';
-import { faFlag, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { faFlag, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faFlag, faTimes);
 
 export default {
     name: 'Flags',
+
+    components: { Fa },
 
     props: {
         value: {
