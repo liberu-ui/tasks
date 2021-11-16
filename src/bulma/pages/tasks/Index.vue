@@ -12,7 +12,7 @@
             @reset="$refs.filterState.reset()"
             id="tasks"
             ref="table">
-            <template #:name="{ row }">
+            <template #name="{ row }">
                 <span>
                     {{ row.name }}
                 </span>
@@ -22,7 +22,7 @@
                         size="xs"/>
                 </span>
             </template>
-            <template #:flag="{ row, column }">
+            <template #flag="{ row, column }">
                 <dropdown trigger="click"
                     :ref="`flag-${row.id}`">
                     <span class="icon is-clickable"
@@ -35,7 +35,7 @@
                         <fa icon="cog"
                             size="xs"/>
                     </span>
-                    <template #:popper>
+                    <template #popper>
                         <flags v-model="row.flag"
                             @input="
                                 update(row.id, 'flag', row.flag);
@@ -45,7 +45,7 @@
                     </template>
                 </dropdown>
             </template>
-            <template #:reminder="{ row }">
+            <template #reminder="{ row }">
                 <dropdown trigger="click"
                     :auto-hide="false"
                     :ref="`reminder-${row.id}`">
@@ -60,7 +60,7 @@
                         <fa icon="cog"
                             size="xs"/>
                     </span>
-                    <template #:popper>
+                    <template #popper>
                         <enso-datepicker class="reminder-picker"
                             v-click-outside="() => {
                                 update(row.id, 'reminder', row.rawReminder);
@@ -74,13 +74,13 @@
                     </template>
                 </dropdown>
             </template>
-            <template #:allocatedTo="{ row }">
+            <template #allocatedTo="{ row }">
                 <dropdown trigger="click"
                     :ref="`allocated_to-${row.id}`"
                     v-if="canChangeAllocation">
                     <avatar class="is-24x24 is-clickable"
                         :user="row.allocatedTo"/>
-                    <template #:popper>
+                    <template #popper>
                         <div class="allocated-to"
                             v-if="isOpen(`allocated_to-${row.id}`)">
                             <enso-select v-model="row.allocatedTo.id"
@@ -98,12 +98,12 @@
                     :user="row.allocatedTo"
                     v-else/>
             </template>
-            <template #:completed="{ row }">
+            <template #completed="{ row }">
                 <vue-switch class="is-medium"
                     v-model="row.completed"
                     @input="update(row.id, 'completed', row.completed)"/>
             </template>
-            <template #:createdBy="{ row: { createdBy } }">
+            <template #createdBy="{ row: { createdBy } }">
                 <avatar class="is-24x24"
                     :user="createdBy"/>
             </template>

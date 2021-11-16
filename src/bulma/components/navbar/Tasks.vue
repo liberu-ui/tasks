@@ -1,6 +1,6 @@
 <template>
     <core-tasks>
-        <template #:default="{
+        <template #default="{
                 dateTime, events, fetch, flagClass, loading,
                 overdue, pending, tasks, visitTask, visitTasks,
             }">
@@ -9,19 +9,19 @@
                 @click="$refs.navbarItem.toggle(); fetch()"
                 @touch="visitTasks();$refs.navbarItem.hide()"
                 ref="navbarItem">
-                <template #:sup
+                <template #sup
                     v-if="overdue > 0">
                     <span class="has-text-danger">
                         {{ overdue }}
                     </span>
                 </template>
-                <template #:sub
+                <template #sub
                     v-if="pending > 0">
                     <span class="has-text-info">
                         {{ pending }}
                     </span>
                 </template>
-                <template #:default>
+                <template #default>
                     <div class="task-list"
                         v-on="events">
                         <a v-for="task in tasks"
