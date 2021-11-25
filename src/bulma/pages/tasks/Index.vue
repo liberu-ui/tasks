@@ -128,7 +128,7 @@ import { Avatar } from '@enso-ui/users';
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faClock, faInfoCircle, faCog } from '@fortawesome/free-solid-svg-icons';
-import { VTooltip, Dropdown } from 'v-tooltip';
+import { Dropdown } from 'v-tooltip';
 import { clickOutside } from '@enso-ui/directives';
 import Filters from './components/Filters.vue';
 import Flags from './components/Flags.vue';
@@ -138,7 +138,7 @@ library.add(faClock, faInfoCircle, faCog);
 export default {
     name: 'Index',
 
-    directives: { tooltip: VTooltip, clickOutside },
+    directives: { clickOutside },
 
     components: {
         Avatar,

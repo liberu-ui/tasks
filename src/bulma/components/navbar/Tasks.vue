@@ -85,7 +85,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faEye, faClock, faFlag, faTasks,
 } from '@fortawesome/free-solid-svg-icons';
-import { VTooltip } from 'v-tooltip';
 import NavbarItem from '@enso-ui/ui/src/bulma/components/navbar/NavbarItem.vue';
 import CoreTasks from '../../../core/components/navbar/Tasks.vue';
 
@@ -94,7 +93,7 @@ library.add(faEye, faTasks, faClock, faFlag);
 export default {
     name: 'Tasks',
 
-    directives: { clickOutside, tooltip: VTooltip },
+    directives: { clickOutside },
 
     components: { CoreTasks, Fa, NavbarItem },
 
