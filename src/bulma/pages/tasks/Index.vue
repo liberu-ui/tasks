@@ -23,7 +23,7 @@
                 </span>
             </template>
             <template #flag="{ row, column }">
-                <dropdown trigger="click"
+                <dropdown :triggers="['click']"
                     :ref="`flag-${row.id}`">
                     <span class="icon is-clickable"
                         :class="`has-text-${column.enum._get(row.flag).toLowerCase()}`"
@@ -46,7 +46,7 @@
                 </dropdown>
             </template>
             <template #reminder="{ row }">
-                <dropdown trigger="click"
+                <dropdown :triggers="['click']"
                     :auto-hide="false"
                     :ref="`reminder-${row.id}`">
                     <span class="icon is-clickable"
@@ -75,7 +75,7 @@
                 </dropdown>
             </template>
             <template #allocatedTo="{ row }">
-                <dropdown trigger="click"
+                <dropdown :triggers="['click']"
                     :ref="`allocated_to-${row.id}`"
                     v-if="canChangeAllocation">
                     <avatar class="is-24x24 is-clickable"
@@ -99,9 +99,11 @@
                     v-else/>
             </template>
             <template #completed="{ row }">
-                <vue-switch class="is-medium"
-                    v-model="row.completed"
-                    @input="update(row.id, 'completed', row.completed)"/>
+                <div class="is-flex is-justify-content-center">
+                    <vue-switch class="is-medium"
+                        v-model="row.completed"
+                        @input="update(row.id, 'completed', row.completed)"/>
+                </div>
             </template>
             <template #createdBy="{ row: { createdBy } }">
                 <avatar class="is-24x24"
