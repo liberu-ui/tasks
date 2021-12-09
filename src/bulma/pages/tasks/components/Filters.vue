@@ -30,7 +30,7 @@
         <div class="column is-narrow">
             <enso-date-filter class="box raises-on-hover"
                 v-model="params.dateInterval"
-                @update="intervals.tasks.reminder = $event"/>
+                v-model:interval="intervals.tasks.reminder"/>
         </div>
     </div>
 </template>
