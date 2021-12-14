@@ -29,7 +29,7 @@
         </div>
         <div class="column is-narrow">
             <enso-date-filter class="box raises-on-hover"
-                v-model="params.dateInterval"
+                v-model:filter="params.dateFilter"
                 v-model:interval="intervals.tasks.reminder"/>
         </div>
     </div>

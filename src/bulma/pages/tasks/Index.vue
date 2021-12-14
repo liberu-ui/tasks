@@ -176,7 +176,7 @@ export default {
             },
         },
         params: {
-            dateInterval: 'today',
+            dateFilter: 'today',
             overdue: null,
         },
     }),
