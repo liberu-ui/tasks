@@ -49,7 +49,7 @@ export default {
         },
     },
 
-    emits: ['change', 'update:modelValue'],
+    emits: ['update:modelValue'],
 
     computed: mapState(['enums']),
 };

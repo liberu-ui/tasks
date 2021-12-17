@@ -37,11 +37,10 @@
                     </span>
                     <template #popper>
                         <flags v-model="row.flag"
-                            @input="
+                            @update:modelValue="
                                 update(row.id, 'flag', row.flag);
                                 $refs[`flag-${row.id}`].hide()
-                            "
-                            v-if="isOpen(`flag-${row.id}`)"/>
+                            "/>
                     </template>
                 </dropdown>
             </template>
@@ -69,8 +68,7 @@
                             v-model="row.rawReminder"
                             format="Y-m-d H:i:s"
                             time
-                            :alt-format="dateFormat"
-                            v-if="isOpen(`reminder-${row.id}`)"/>
+                            :alt-format="dateFormat"/>
                     </template>
                 </dropdown>
             </template>
@@ -81,8 +79,7 @@
                     <avatar class="is-24x24 is-clickable"
                         :user="row.allocatedTo"/>
                     <template #popper>
-                        <div class="allocated-to"
-                            v-if="isOpen(`allocated_to-${row.id}`)">
+                        <div class="allocated-to">
                             <enso-select v-model="row.allocatedTo.id"
                                 @select="
                                     update(row.id, 'allocated_to', row.allocatedTo.id);
@@ -102,7 +99,7 @@
                 <div class="is-flex is-justify-content-center">
                     <vue-switch class="is-medium"
                         v-model="row.completed"
-                        @input="update(row.id, 'completed', row.completed)"/>
+                        @update:modelValue="update(row.id, 'completed', row.completed)"/>
                 </div>
             </template>
             <template #createdBy="{ row: { createdBy } }">
@@ -207,10 +204,6 @@ export default {
                     this.errorHandler(error);
                 }
             });
-        },
-
-        isOpen(ref) {
-            return this.$refs[ref]?.isOpen;
         },
     },
 };
