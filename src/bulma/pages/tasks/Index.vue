@@ -158,7 +158,7 @@ export default {
     inject: ['i18n', 'route', 'toastr', 'errorHandler'],
 
     data: () => ({
-        apiVersion: 1.1,
+        apiVersion: 2,
         ready: false,
         filters: {
             tasks: {
