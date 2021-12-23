@@ -152,7 +152,7 @@ export default {
         EnsoSelect,
     },
 
-    inject: ['i18n', 'route', 'toastr', 'errorHandler'],
+    inject: ['http', 'i18n', 'route', 'toastr', 'errorHandler'],
 
     data: () => ({
         apiVersion: 2,
@@ -192,7 +192,7 @@ export default {
 
     methods: {
         update(id, attribute, value) {
-            axios.patch(this.route('tasks.update', { task: id }), {
+            this.http.patch(this.route('tasks.update', { task: id }), {
                 [attribute]: value,
             }).then(({ data: { message } }) => {
                 this.toastr.success(message);
