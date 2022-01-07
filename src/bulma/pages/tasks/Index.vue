@@ -37,7 +37,7 @@
                     </span>
                     <template #popper>
                         <flags v-model="row.flag"
-                            @update:modelValue="
+                            @update:model-value="
                                 update(row.id, 'flag', row.flag);
                                 $refs[`flag-${row.id}`].hide()
                             "/>
@@ -99,7 +99,7 @@
                 <div class="is-flex is-justify-content-center">
                     <vue-switch class="is-medium"
                         v-model="row.completed"
-                        @update:modelValue="update(row.id, 'completed', row.completed)"/>
+                        @update:model-value="update(row.id, 'completed', row.completed)"/>
                 </div>
             </template>
             <template #createdBy="{ row: { createdBy } }">
