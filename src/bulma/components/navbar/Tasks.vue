@@ -1,6 +1,6 @@
 <template>
     <core-tasks>
-        <template v-slot:default="{
+        <template #default="{
                 dateTime, events, fetch, flagClass, loading,
                 overdue, pending, tasks, visitTask, visitTasks,
             }">
@@ -9,19 +9,19 @@
                 @click="$refs.navbarItem.toggle(); fetch()"
                 @touch="visitTasks();$refs.navbarItem.hide()"
                 ref="navbarItem">
-                <template v-slot:sup
+                <template #sup
                     v-if="overdue > 0">
                     <span class="has-text-danger">
                         {{ overdue }}
                     </span>
                 </template>
-                <template v-slot:sub
+                <template #sub
                     v-if="pending > 0">
                     <span class="has-text-info">
                         {{ pending }}
                     </span>
                 </template>
-                <template v-slot:default>
+                <template #default>
                     <div class="task-list"
                         v-on="events">
                         <a v-for="task in tasks"
@@ -80,11 +80,11 @@
 </template>
 <script>
 import { clickOutside } from '@enso-ui/directives';
+import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faEye, faClock, faFlag, faTasks,
 } from '@fortawesome/free-solid-svg-icons';
-import { VTooltip } from 'v-tooltip';
 import NavbarItem from '@enso-ui/ui/src/bulma/components/navbar/NavbarItem.vue';
 import CoreTasks from '../../../core/components/navbar/Tasks.vue';
 
@@ -93,9 +93,9 @@ library.add(faEye, faTasks, faClock, faFlag);
 export default {
     name: 'Tasks',
 
-    directives: { clickOutside, tooltip: VTooltip },
+    directives: { clickOutside },
 
-    components: { CoreTasks, NavbarItem },
+    components: { CoreTasks, Fa, NavbarItem },
 
     inject: ['i18n'],
 };

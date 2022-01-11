@@ -6,7 +6,7 @@ import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
 export default {
     name: 'Tasks',
 
-    inject: ['errorHandler', 'route', 'routerErrorHandler', 'toastr'],
+    inject: ['errorHandler', 'http', 'route', 'routerErrorHandler', 'toastr'],
 
     props: {
         paginate: {
@@ -48,7 +48,7 @@ export default {
             }
         },
         count() {
-            axios.get(this.route('tasks.count'))
+            this.http.get(this.route('tasks.count'))
                 .then(({ data }) => this.updateCounters(data))
                 .catch(this.errorHandler);
         },
@@ -66,7 +66,7 @@ export default {
 
             this.loading = true;
 
-            axios.get(this.route('tasks.index'), {
+            this.http.get(this.route('tasks.index'), {
                 params: { offset: this.offset, paginate: this.paginate },
             }).then(({ data }) => {
                 this.tasks = this.offset ? this.tasks.concat(data) : data;
@@ -97,7 +97,7 @@ export default {
     },
 
     render() {
-        return this.$scopedSlots.default({
+        return this.$slots.default({
             dateTime: this.dateTime,
             events: {
                 scroll: e => this.computeScrollPosition(e),

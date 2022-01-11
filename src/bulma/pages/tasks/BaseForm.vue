@@ -1,6 +1,6 @@
 <template>
     <enso-form class="box form-box has-background-light raises-on-hover">
-        <template v-slot:flag="{field, errors}">
+        <template #flag="{field, errors}">
             <div class="field">
                 <label class="label">
                     {{ i18n(field.label) }}
