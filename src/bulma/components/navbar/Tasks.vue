@@ -6,8 +6,8 @@
             }">
             <navbar-item icon="tasks"
                 :loading="loading"
-                @click="$refs.navbarItem.toggle(); fetch()"
-                @touch="visitTasks();$refs.navbarItem.hide()"
+                @show="fetch"
+                @touch="visitTasks"
                 ref="navbarItem">
                 <template #sup
                     v-if="overdue > 0">
