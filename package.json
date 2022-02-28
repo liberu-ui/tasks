@@ -28,7 +28,7 @@
     "@enso-ui/select": "^3.0",
     "@enso-ui/switch": "^2.0",
     "@enso-ui/tables": "^3.0",
-    "@enso-ui/ui": "^5.0",
+    "@enso-ui/ui": "^6.0",
     "@enso-ui/users": "^2.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.2",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
