@@ -33,12 +33,10 @@ export default {
     created() {
         this.fetch = debounce(this.fetch, 500);
         this.count();
-        this.connect();
         this.listen();
     },
 
     methods: {
-        ...mapActions('websockets', ['connect']),
         computeScrollPosition(event) {
             const a = event.target.scrollTop;
             const b = event.target.scrollHeight - event.target.clientHeight;
