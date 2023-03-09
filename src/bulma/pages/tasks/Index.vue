@@ -197,13 +197,7 @@ export default {
             }).then(({ data: { message } }) => {
                 this.toastr.success(message);
                 this.$refs.table.fetch();
-            }).catch(error => {
-                if (error.response && error.response.status === 422) {
-                    this.toastr.warning(this.i18n(error.response.data.message));
-                } else {
-                    this.errorHandler(error);
-                }
-            });
+            }).catch(errorHandler);
         },
     },
 };
