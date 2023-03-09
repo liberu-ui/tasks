@@ -1,6 +1,6 @@
 {
   "name": "@enso-ui/tasks",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Basic tasks package",
   "main": "src/bulma/pages/tasks/Index.vue",
   "scripts": {
