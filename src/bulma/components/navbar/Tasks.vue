@@ -79,13 +79,13 @@
     </core-tasks>
 </template>
 <script>
-import { clickOutside } from '@enso-ui/directives';
+import { clickOutside } from '@liberu-ui/directives';
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faEye, faClock, faFlag, faTasks,
 } from '@fortawesome/free-solid-svg-icons';
-import NavbarItem from '@enso-ui/ui/src/bulma/components/navbar/NavbarItem.vue';
+import NavbarItem from '@liberu-ui/ui/src/bulma/components/navbar/NavbarItem.vue';
 import CoreTasks from '../../../core/components/navbar/Tasks.vue';
 
 library.add(faEye, faTasks, faClock, faFlag);

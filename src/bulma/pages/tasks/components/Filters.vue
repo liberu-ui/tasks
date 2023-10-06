@@ -39,7 +39,7 @@
 import { mapState } from 'vuex';
 import {
     BooleanFilter, EnsoDateFilter, EnsoFilter, EnsoSelectFilter,
-} from '@enso-ui/filters/bulma';
+} from '@liberu-ui/filters/bulma';
 import { faFlag, faExclamation } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 

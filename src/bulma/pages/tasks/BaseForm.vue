@@ -17,7 +17,7 @@
     </enso-form>
 </template>
 <script>
-import { EnsoForm } from '@enso-ui/forms/bulma';
+import { EnsoForm } from '@liberu-ui/forms/bulma';
 import Flags from './components/Flags.vue';
 
 export default {

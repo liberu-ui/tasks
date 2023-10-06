@@ -1,10 +1,10 @@
 # Tasks
 
-![npm license](https://img.shields.io/npm/l/@enso-ui/tasks.svg) 
-![npm download](https://img.shields.io/npm/dm/@enso-ui/tasks.svg) 
-![GitHub top language](https://img.shields.io/github/languages/top/enso-ui/tasks.svg) 
-![GitHub issues](https://img.shields.io/github/issues/enso-ui/tasks.svg) 
-![npm version](https://img.shields.io/npm/v/@enso-ui/tasks.svg) 
+![npm license](https://img.shields.io/npm/l/@liberu-ui/tasks.svg) 
+![npm download](https://img.shields.io/npm/dm/@liberu-ui/tasks.svg) 
+![GitHub top language](https://img.shields.io/github/languages/top/liberu-ui/tasks.svg) 
+![GitHub issues](https://img.shields.io/github/issues/liberu-ui/tasks.svg) 
+![npm version](https://img.shields.io/npm/v/@liberu-ui/tasks.svg) 
 
 ## Usage
 The component cannot be used outside of the Liberu ecosystem.
