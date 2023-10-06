@@ -1,7 +1,7 @@
 <script>
 import { debounce } from 'lodash';
 import { mapState, mapGetters, mapActions } from 'vuex';
-import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
+import format from '@liberu-ui/ui/src/modules/plugins/date-fns/format';
 
 export default {
     name: 'Tasks',

@@ -118,17 +118,17 @@
 
 <script>
 import { mapState } from 'vuex';
-import { FilterState } from '@enso-ui/filters/renderless';
-import { EnsoTable } from '@enso-ui/tables/bulma';
-import { EnsoSelect } from '@enso-ui/select/bulma';
-import VueSwitch from '@enso-ui/switch/bulma';
-import { EnsoDatepicker } from '@enso-ui/datepicker/bulma';
-import { Avatar } from '@enso-ui/users';
+import { FilterState } from '@liberu-ui/filters/renderless';
+import { EnsoTable } from '@liberu-ui/tables/bulma';
+import { EnsoSelect } from '@liberu-ui/select/bulma';
+import VueSwitch from '@liberu-ui/switch/bulma';
+import { EnsoDatepicker } from '@liberu-ui/datepicker/bulma';
+import { Avatar } from '@liberu-ui/users';
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faClock, faInfoCircle, faCog } from '@fortawesome/free-solid-svg-icons';
 import { Dropdown } from 'v-tooltip';
-import { clickOutside } from '@enso-ui/directives';
+import { clickOutside } from '@liberu-ui/directives';
 import Filters from './components/Filters.vue';
 import Flags from './components/Flags.vue';
 
